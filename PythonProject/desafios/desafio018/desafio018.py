@@ -2,18 +2,23 @@ class Churrasco:
 
     def __init__(self, titulo, quant):
         self.titulo = titulo
-        self.quant = 0
+        self.quant = quant
+        self.consumopadrao = 0.4
+        self.kilograma = 1.0
 
-    def consumo(self, valor):
-        self.quant += 0.400
 
-    def kilograma(self, valor):
-        self.kilograma = 1.00
+    def consumototal(self):
+        consumototal = self.quant * self.consumopadrao
+        return consumototal
 
-    def preco(self, kilograma):
-        self.preco = 82.40 / kilograma
-        return self.preco
+    def preco(self):
+        preco = 82.40 * self.quant
+        return preco
 
     def total(self):
         self.total = self.quant
 
+
+c1 = Churrasco('Churrasco dos Amigos', 15)
+
+print(c1.preco())
