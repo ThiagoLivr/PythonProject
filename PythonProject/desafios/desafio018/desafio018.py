@@ -1,24 +1,44 @@
+from rich import print
+from rich.panel import Panel
+
 class Churrasco:
+
+    #Atributos de Classe
+    consumo_padrao:float = 0.400
+    preco_kg:float = 82.40
 
     def __init__(self, titulo, quant):
         self.titulo = titulo
         self.quant = quant
-        self.consumopadrao = 0.4
-        self.kilograma = 1.0
+
+    def __str__(self):
+        return f'Esse eh {self.titulo} com {self.quant} pessoas participando'
+
+    def calcular_qtd_carne(self) -> float:
+        return self.quant * Churrasco.consumo_padrao
+
+    def calcular_custo_total(self) -> float:
+        return self.calcular_qtd_carne() * Churrasco.preco_kg
+
+    def calcular_custo_individual(self) -> float:
+        return self.calcular_custo_total() / self.quant
 
 
-    def consumototal(self):
-        consumototal = self.quant * self.consumopadrao
-        return consumototal
+    def analisar(self):
+        conteudo = f"Analisando [green]{self.titulo}[/] com [blue]{self.quant}[/] convidados"
+        conteudo += (f"\nCada participante comera {Churrasco.consumo_padrao}Kg e cada Kg "
+                     f"custa R${Churrasco.preco_kg:,.2f}")
+        conteudo += f"\nRecomendo [blue]comprar {self.calcular_qtd_carne():.3f}Kg[/] de carne"
+        conteudo += f'\nO custo total sera de [green]R${self.calcular_custo_total():,.2f}[/]'
+        conteudo += f'\nCada pessoa pagara [yellow]R${self.calcular_custo_individual():.2f}[/] para participar'
 
-    def preco(self):
-        preco = 82.40 * self.quant
-        return preco
 
-    def total(self):
-        self.total = self.quant
+        painel = Panel(conteudo,title=self.titulo)
+        print(painel)
 
 
 c1 = Churrasco('Churrasco dos Amigos', 15)
+c1.analisar()
 
-print(c1.preco())
+c2 = Churrasco('Festa do fim de ano', 80)
+c2.analisar()
